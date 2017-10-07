@@ -4,6 +4,13 @@
 <p>You should <a href="/accounts/login/">login</a>  to change videos.</p>
 {% endif %}
 
+<h1>Search for Videos:</h1>
+<form method="GET" action="." class="video-search-form">
+    <input type="text" name="q">
+    <input type="submit" value="OK">
+</form>
+{% if request.GET.q %}<p>Back to <a href="/">all videos.</a></p>{% endif %}
+
 <h1>Videos List Available</h1>
 <ul>
 {% for video in available_videos %}
@@ -29,3 +36,6 @@
     <li>No videos yet.</li>
 {% endfor %}
 </ul>
+
+
+

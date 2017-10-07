@@ -12,12 +12,14 @@ class VideoListView(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super(VideoListView, self).get_context_data(**kwargs)
-		context['rent_videos'] = Video.objects.filter(rent_available=False)
-		context['available_videos'] = Video.objects.filter(rent_available=True)
+		q = self.request.GET.get('q')
+		if q:
+			objs = Video.objects.filter(title__icontains=q)
+		else:
+			objs = Video.objects.all()
+		context['rent_videos'] = objs.filter(rent_available=False)
+		context['available_videos'] = objs.filter(rent_available=True)
 		return context
-
-# class VideoFormView(FormView):
-# 	form_class = VideoForm
 
 
 class VideoDetailView(DetailView):
