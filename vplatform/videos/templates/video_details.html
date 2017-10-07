@@ -1,0 +1,24 @@
+<h1>Video: {{ video.title }}</h1>
+<h3>Was rent by: {{ video.rent_by }}</h3>
+{% if video.rent_by_phone %}<h3>Phone: {{ video.rent_by_phone}}</h3>{% endif %}
+
+{% if not video.rent_available %}
+<form method="POST" action="return" class="get-back-form">
+    {% csrf_token %}
+    <input type="submit" value="Return this video!">
+</form>
+{% endif %}
+
+<hr>
+
+{% if request.user.is_authenticated %}
+<h1>New renter:</h1>
+<form method="POST" action="" class="video-form">
+	{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="OK">
+</form>
+
+{% else %}
+    <h1>You should <a href="{% url "account_login" %}">login</a> to add comment</h1>
+{% endif %}

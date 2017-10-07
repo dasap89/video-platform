@@ -1,0 +1,31 @@
+{% if request.user.is_authenticated %}
+<p>You are logged as {{ request.user.username }}. You can <a href="/accounts/logout/">logout.</a></p>
+{% else %}
+<p>You should <a href="/accounts/login/">login</a>  to change videos.</p>
+{% endif %}
+
+<h1>Videos List Available</h1>
+<ul>
+{% for video in available_videos %}
+    <li>{{ video.title }}
+     - Last Rent Start at {{ video.rent_start_time }}
+    {% if video.rent_by %}- {{ video.rent_by }}{% endif %}
+    {% if video.rent_manager %}- {{ video.rent_manager }}{% endif %}
+    {% if request.user.is_authenticated %}<a href="{% url "video_details" pk=video.id %}">Edit</a>{% endif %}</li>
+{% empty %}
+    <li>No videos yet.</li>
+{% endfor %}
+</ul>
+
+<h1>Videos List Rent</h1>
+<ul>
+{% for video in rent_videos %}
+    <li>{{ video.title }}
+     - {{ video.rent_start_time }}
+    {% if video.rent_by %}- {{ video.rent_by }}{% endif %}
+    {% if video.rent_manager %}- {{ video.rent_manager }}{% endif %}
+    {% if request.user.is_authenticated %}<a href="{% url "video_details" pk=video.id %}">Edit</a>{% endif %}</li>
+{% empty %}
+    <li>No videos yet.</li>
+{% endfor %}
+</ul>
